@@ -35,4 +35,4 @@ jobs:
           [ -f .env ] || cp .env.example .env
           [ -L songs ] || ln -s /opt/liquidosoap/songs songs
           npm install
-          prisma migrate deploy
+          npx prisma migrate deploy
