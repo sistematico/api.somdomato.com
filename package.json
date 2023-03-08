@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "prod": "node server",
-    "dev": "nodemon server"
+    "dev": "nodemon server",
+    "migrate": "npx prisma migrate dev --name init"
   },
   "prisma": {
     "seed": "node prisma/seed.js"
@@ -19,6 +20,7 @@
     "prisma": "^4.11.0"
   },
   "dependencies": {
-    "@prisma/client": "^4.11.0"
+    "@prisma/client": "^4.11.0",
+    "node-id3": "^0.2.6"
   }
 }

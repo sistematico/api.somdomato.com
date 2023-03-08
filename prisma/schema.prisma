@@ -41,7 +41,15 @@ model Song {
   id Int @id @default(autoincrement())
   artist String?
   title String?
-  requested Boolean @default(false)
   path String @unique
+  requested DateTime?
+  played DateTime?
+  request Request[]
+}
+
+model Request {
+  id Int @id @default(autoincrement())
+  song Song @relation(fields: [songId], references: [id])
+  songId Int
   createdAt DateTime @default(now())
 }

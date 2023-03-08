@@ -33,6 +33,8 @@ jobs:
           cd ${{ secrets.PROJECT_PATH }}
           git pull
           [ -f .env ] || cp .env.example .env
-          [ -L songs ] || ln -s /opt/liquidosoap/songs songs
+          [ -L songs ] || ln -s /opt/liquidsoap/music songs
           npm install
+          [ -d prisma/migrations ] || npx prisma migrate dev --name init
+          npx prisma db seed
           npx prisma migrate deploy

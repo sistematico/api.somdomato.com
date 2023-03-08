@@ -1,19 +1,20 @@
 import { PrismaClient } from '@prisma/client'
-import { traverseDir } from '../lib/utils.js'
-// import fs from 'fs'
+import { traverseDirAbsolute } from '../lib/utils.js'
+import NodeID3 from 'node-id3'
 
 const prisma = new PrismaClient()
 
 async function main() {
-    // const songs = fs.readdirSync('./songs').map(path => ({ path }))
-    const songs = traverseDir('./songs').map(path => ({ path }))
+    const songs = traverseDirAbsolute('./songs').map(path => ({ path }))
 
     let inserts = []
-    for (const data of songs) {
+    for (const song of songs) {
+        const tags = NodeID3.read(song.path)
+
         inserts.push(prisma.song.upsert({
-            where: { path: data.path },
-            update: { path: data.path },
-            create: { path: data.path }
+            where: { path: song.path },
+            update: { title: tags.title, artist: tags.artist, path: song.path },
+            create: { title: tags.title, artist: tags.artist, path: song.path }
         }))
     }
 

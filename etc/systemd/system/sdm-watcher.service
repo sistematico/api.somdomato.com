@@ -1,9 +1,0 @@
-[Unit]
-Description=Som do Mato API Server Watcher
-
-[Service]
-Type=oneshot
-ExecStart=/usr/bin/systemctl restart sdm
-
-[Install]
-WantedBy=multi-user.target
