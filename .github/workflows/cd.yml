@@ -6,6 +6,22 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    - name: Copy repository contents via scp
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        password: ${{ secrets.SSH_PASS }}
+        port: ${{ secrets.SSH_PORT }}
+        source: "."
+        target: ${{ secrets.PROJECT_PATH }}
+
+  build:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
     - name: Deploy using ssh
       uses: appleboy/ssh-action@master
       with:
@@ -14,7 +30,7 @@ jobs:
         password: ${{ secrets.SSH_PASS }}
         port: ${{ secrets.SSH_PORT }}
         script: |
-          [ -d ${{ secrets.PROJECT_PATH }} ] && cd ${{ secrets.PROJECT_PATH }} || git clone ${{ github.server_url }}/${{ github.repository }} ${{ secrets.PROJECT_PATH }}
+          cd ${{ secrets.PROJECT_PATH }}
           git pull
           [ -f .env ] || cp .env.example .env
           [ -L songs ] || ln -s /opt/liquidosoap/songs songs
