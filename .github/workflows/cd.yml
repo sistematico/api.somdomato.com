@@ -1,0 +1,20 @@
+name: Node.js CD
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy using ssh
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_PASS }}
+        port: ${{ secrets.SSH_PORT }}
+        script: |
+          cd ${{ secrets.PROJECT_PATH }}
+          git pull
+          pnpm install --only=prod
+          #sudo /usr/bin/systemctl restart nodejs.service
