@@ -3,4 +3,5 @@ data/
 !data/.gitkeep
 songs/
 .env
-*old.*
+*.old.*
+*.old

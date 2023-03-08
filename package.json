@@ -1,11 +1,12 @@
 {
-  "name": "hello-prisma",
+  "name": "api.somdomato.com",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Simple API using Node.js, Prisma and PostgreSQL",
+  "main": "main.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prod": "node main",
+    "dev": "nodemon main"
   },
   "prisma": {
     "seed": "node prisma/seed.js"
@@ -14,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "nodemon": "^2.0.21",
     "prisma": "^4.11.0"
   },
   "dependencies": {
