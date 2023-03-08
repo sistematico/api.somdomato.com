@@ -1,5 +1,5 @@
 // import { list, addRequest } from '../model/song.js'
-import { list, addRequest, deleteLast } from '../lib/main.js'
+import { list, addRequest, deleteLast } from '../src/main.js'
 
 export const router = async (request, response) => {
     const notFound = (message = 'Route not found') => {

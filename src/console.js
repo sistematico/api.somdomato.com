@@ -43,7 +43,11 @@ if (!nextSong) {
     nextSong = await randomSong()
     process.stdout.write(nextSong.path)
 } else {
-    process.stdout.write(JSON.stringify(nextSong.song.path))
+    // if ('song' in nextSong && 'path' in nextSong.song) {
+        process.stdout.write(nextSong.song.path)
+    // } else {
+
+    // }
 }
 
 await prisma.$disconnect()

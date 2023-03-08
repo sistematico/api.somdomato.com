@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client'
-import { traverseDirAbsolute } from '../lib/utils.js'
+import { traverseDirAbsolute } from '../src/utils.js'
 import NodeID3 from 'node-id3'
 
 const prisma = new PrismaClient()

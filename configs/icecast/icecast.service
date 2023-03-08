@@ -1,0 +1,18 @@
+[Unit]
+Description=Icecast2 daemon
+Documentation=https://gitlab.xiph.org/xiph/icecast-server
+After=network.target
+
+[Service]
+Type=simple
+Restart=always
+User=icecast
+#ExecStart=/usr/bin/icecast -b -c /etc/icecast.xml
+ExecStart=/usr/bin/icecast -c /etc/icecast.xml
+ExecReload=/bin/kill -HUP $MAINPID
+PIDFile=/var/run/icecast/icecast.pid
+KillMode=process
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
