@@ -1,10 +1,12 @@
 import { PrismaClient } from '@prisma/client'
-import fs from 'fs'
+import { traverseDir } from '../lib/utils.js'
+// import fs from 'fs'
 
 const prisma = new PrismaClient()
 
 async function main() {
-    const songs = fs.readdirSync('./songs').map(path => ({ path }))
+    // const songs = fs.readdirSync('./songs').map(path => ({ path }))
+    const songs = traverseDir('./songs').map(path => ({ path }))
 
     let inserts = []
     for (const data of songs) {

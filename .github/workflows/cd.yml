@@ -16,5 +16,7 @@ jobs:
         script: |
           cd ${{ secrets.PROJECT_PATH }}
           git pull
-          pnpm install --only=prod
-          #sudo /usr/bin/systemctl restart nodejs.service
+          [ -f .env ] || cp .env.example .env
+          [ -L songs ] || ln -s /opt/liquidosoap/songs songs
+          npm install
+          prisma migrate deploy

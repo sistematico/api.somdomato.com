@@ -5,7 +5,7 @@ Description=Som do Mato API Service
 Environment=NODE_ENV=production PORT=3000
 User=nginx
 
-ExecStart=/usr/bin/node /var/www/api.somdomato.com/main.js
+ExecStart=/usr/bin/node /var/www/api.somdomato.com/server.js
 WorkingDirectory=/var/www/api.somdomato.com
 
 RestartSec=10

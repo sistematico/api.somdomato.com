@@ -2,11 +2,11 @@
   "name": "api.somdomato.com",
   "version": "1.0.0",
   "description": "Simple API using Node.js, Prisma and PostgreSQL",
-  "main": "main.js",
+  "main": "server.js",
   "type": "module",
   "scripts": {
-    "prod": "node main",
-    "dev": "nodemon main"
+    "prod": "node server",
+    "dev": "nodemon server"
   },
   "prisma": {
     "seed": "node prisma/seed.js"
