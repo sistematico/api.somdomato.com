@@ -3,7 +3,8 @@ name: Node.js CD
 on: [push]
 
 jobs:
-  build:
+  deploy:
+    needs: build
     runs-on: ubuntu-latest
     steps:
     - name: Deploy using ssh
