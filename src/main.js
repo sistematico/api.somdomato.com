@@ -29,11 +29,9 @@ export async function deleteLast() {
                 id: lastRequest[0].id,
             },
         })
-        
     }
 
     await prisma.$disconnect()
-
     return lastRequest
 }
 
@@ -72,6 +70,20 @@ export async function addRequest(id) {
 
     await prisma.$disconnect()
     return insertRequest ?? false
+}
+
+export async function search(param) {
+    const result = await prisma.song.findMany({
+        where: {
+            OR: [
+                { artist: { contains: param, mode: 'insensitive' } },
+                { title: { contains: param, mode: 'insensitive' } },
+            ],
+        }
+    })
+
+    await prisma.$disconnect()
+    return result
 }
 
 export async function pickSong() {

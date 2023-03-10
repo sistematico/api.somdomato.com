@@ -1,5 +1,5 @@
 // import { list, addRequest } from '../model/song.js'
-import { list, addRequest, deleteLast } from '../src/main.js'
+import { search, list, addRequest, deleteLast } from '../src/main.js'
 
 export const router = async (request, response) => {
     const notFound = (message = 'Route not found') => {
@@ -33,7 +33,38 @@ export const router = async (request, response) => {
             notFound()
         }
     } else if (request.method === 'POST') {
-        if (request.url === '/request') {
+        if (request.url === '/pesquisa') {
+            try {
+                let body = ''
+                request.on('data', chunk => { body += chunk.toString()  })
+                // .match(/[A-Za-z]/g)
+
+                request.on('end', async () => {
+                    const termo = JSON.parse(body)
+                    const data = await search(termo)
+                    // const result = JSON.stringify(searchResponse)
+                    response.writeHead(200, { 'Content-Type': 'application/json' })
+                    response.end(JSON.stringify({ data }))
+                })
+            } catch (error) {
+                console.log(error)
+            }
+        } else if (request.url === '/request') {
+            try {
+                let body = ''
+                request.on('data', chunk => { body += chunk.toString() })
+
+                request.on('end', async () => {
+                    console.log('Chegou até aqui', JSON.parse(body))
+                   
+
+                    response.writeHead(200, { 'Content-Type': 'application/json' })
+                    response.end(JSON.stringify({ 'message': `Request recebido: ${body}` }))
+                })
+            } catch (error) {
+                console.log(error)
+            }
+        } else if (request.url === '/request') {
             try {
                 let body = ''
                 request.on('data', chunk => { body += chunk.toString() })
