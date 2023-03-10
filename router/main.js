@@ -1,5 +1,4 @@
-// import { list, addRequest } from '../model/song.js'
-import { search, list, addRequest, deleteLast } from '../src/main.js'
+import { search, list, listRequests, addRequest, deleteLast } from '../src/main.js'
 
 export const router = async (request, response) => {
     const notFound = (message = 'Route not found') => {
@@ -9,7 +8,22 @@ export const router = async (request, response) => {
     }
 
     if (request.method === 'GET') {
-        if (request.url === '/musicas') {
+        if (request.url.match(/\/request\/([0-9]+)/) || request.url.match(/\/pedido\/([0-9]+)/) || request.url.match(/\/pedir\/([0-9]+)/)) {
+            const id = request.url.split("/")[2] ?? null
+            const reqSong = id !== null ? await addRequest(id) : null
+
+            if (reqSong) {
+                response.writeHead(200, { 'Content-Type': 'application/json' })
+                response.end(JSON.stringify({ message: `ID: ${id} pedido com sucesso` }))
+            } else {
+                response.writeHead(200, { 'Content-Type': 'application/json' })
+                response.end(JSON.stringify({ message: `Erro ao pedir a música ID: ${id}` }))
+            }
+        } else if (request.url === '/requests' || request.url === '/pedidos') {
+            const songRequests = await listRequests()
+            response.writeHead(200, { 'Content-Type': 'application/json' })
+            response.end(JSON.stringify(songRequests))
+        } else if (request.url === '/musicas' || request.url === '/songs') {
             const songs = await list()
             response.writeHead(200, { 'Content-Type': 'application/json' })
             // response.write(JSON.stringify(songs))
@@ -36,7 +50,7 @@ export const router = async (request, response) => {
         if (request.url === '/pesquisa') {
             try {
                 let body = ''
-                request.on('data', chunk => { body += chunk.toString()  })
+                request.on('data', chunk => { body += chunk.toString() })
                 // .match(/[A-Za-z]/g)
 
                 request.on('end', async () => {
@@ -49,22 +63,22 @@ export const router = async (request, response) => {
             } catch (error) {
                 console.log(error)
             }
+        } else if (request.url === '/download') {
+            // todo
         } else if (request.url === '/request') {
             try {
                 let body = ''
                 request.on('data', chunk => { body += chunk.toString() })
 
                 request.on('end', async () => {
-                    console.log('Chegou até aqui', JSON.parse(body))
-                   
-
+                    const result = JSON.parse(body)
                     response.writeHead(200, { 'Content-Type': 'application/json' })
-                    response.end(JSON.stringify({ 'message': `Request recebido: ${body}` }))
+                    response.end(JSON.stringify({ 'message': `Request recebido: ${result.id}` }))
                 })
             } catch (error) {
                 console.log(error)
             }
-        } else if (request.url === '/request') {
+        } else if (request.url === '/request2') {
             try {
                 let body = ''
                 request.on('data', chunk => { body += chunk.toString() })

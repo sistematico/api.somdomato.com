@@ -8,7 +8,8 @@
     "prod": "node server",
     "dev": "nodemon server",
     "migrate": "npx prisma migrate dev --name init --force",
-    "seed": "node prisma/seed.js"
+    "seed": "node prisma/seed.js",
+    "console": "node src/console.js"
   },
   "prisma": {
     "seed": "node prisma/seed.js"

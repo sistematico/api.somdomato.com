@@ -58,18 +58,22 @@ export async function list() {
 }
 
 export async function addRequest(id) {
-    // const query = await prisma.song.findFirst({
-    //     where: { id: id }
-    // })
-
+    id = Number(id)
+    
     const insertRequest = prisma.request.upsert({
-        where: { id: id },
+        where: { id },
         update: {},
         create: { songId: id }
     })
 
     await prisma.$disconnect()
-    return insertRequest ?? false
+    return insertRequest
+}
+
+export async function listRequests() {
+    const songRequests = await prisma.request.findMany()
+    await prisma.$disconnect()
+    return songRequests
 }
 
 export async function search(param) {
