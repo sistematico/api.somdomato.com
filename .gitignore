@@ -1,7 +1,9 @@
 prisma/migrations/
 node_modules
-data
+data/
 !data/.gitkeep
+logs/
+!logs/.gitkeep
 songs/
 .env
 *.old.*

@@ -1,0 +1,24 @@
+[Unit]
+Description=Node.js Unit
+Documentation=https://nodejs.org
+After=network.target
+
+[Service]
+Type=simple
+User=nginx
+
+Environment=NODE_ENV=production
+Environment=PORT=4000
+
+WorkingDirectory=/var/www/api.somdomato.com
+ExecStart=/usr/bin/node /var/www/api.somdomato.com/server.js
+
+Restart=on-failure
+RestartSec=10
+
+StandardOutput=/var/www/api.somdomato.com/logs/sdm.out.log
+StandardError=/var/www/api.somdomato.com/logs/sdm.err.log
+SyslogIdentifier=nodejs-sdm
+
+[Install]
+WantedBy=multi-user.target
