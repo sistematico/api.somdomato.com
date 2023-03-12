@@ -32,7 +32,7 @@ jobs:
         script: |
           cd ${{ secrets.PROJECT_PATH }}
           git pull
-          [ -f .env ] || cp .env.example .env
+          [ -f .env ] || cp .env.production .env
           [ -L songs ] || ln -s /media/musicas songs
           npm install
           [ -d prisma/migrations ] || npx prisma migrate dev --name init
